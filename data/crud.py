@@ -30,7 +30,7 @@ new_map = {'F': ['UUU', 'UUC'], 'L': ['UUA', 'UUG', 'CUU', 'CUC', 'CUA', 'CUG'],
 
 s = Session()
 
-# s.add_all(dna_bases)
+s.add_all(dna_bases)
 
 for pp, codons in new_map.items():
     pp = Polypeptide(polypeptide = pp)
