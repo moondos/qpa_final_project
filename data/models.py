@@ -4,12 +4,15 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 
+# Main database related file for PostgreSQL database, tables creation. Tables are configured with required relationships as mentioned in Task 2
+
 Base = declarative_base()
 engine = create_engine(DATABASE_URI)
 
 Session = sessionmaker(bind=engine)
 
 class DNA(Base):
+    # DNA Table model with one-to-one relationship to RNA table
     __tablename__ = 'dna_bases'
     __tablearg__ = {"extend_existing": True}
     
@@ -22,6 +25,7 @@ class DNA(Base):
         return f"{self.dna_base} {self.rna_base}"
 
 class RNA(Base):
+    # RNA Table model with one-to-one relationship to DNA table
     __tablename__ = 'rna_bases'
     __tablearg__ = {"extend_existing": True}
     
@@ -33,6 +37,7 @@ class RNA(Base):
         return f"{self.rna_base}"
 
 class Codon(Base):
+    # Codon Table model with many-to-one relationship to Polypeptide table
     __tablename__ = 'codons'
     __tablearg__ = {"extend_existing": True}
     
@@ -45,6 +50,7 @@ class Codon(Base):
         return f"{self.codon} {self.polypeptide}"
 
 class Polypeptide(Base):
+    # Polypeptide Table model with one-to-many relationship to Codon table
     __tablename__ = 'polypeptides'
     __tablearg__ = {"extend_existing": True}
     

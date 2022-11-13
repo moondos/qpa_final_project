@@ -1,11 +1,15 @@
 from models import Base, Session, engine, DNA,RNA, Codon, Polypeptide
 
+# This script creates a database with related tables and fill them in with required data
+
 def recreate_database():
+    # Creation of database with the models mentioned in models.py
     # Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
 
 recreate_database()
 
+# DNA and RNA tables with one-to-one relationship  
 rna_a = RNA(rna_base="A")
 rna_c = RNA(rna_base="C")
 rna_g = RNA(rna_base="G")
@@ -18,6 +22,7 @@ dna_t = DNA(dna_base="T", rna_base=rna_u)
 
 dna_bases = [dna_a, dna_c, dna_g, dna_t]
 
+# Dictionary containing Polypeptide to Codon relation
 new_map = {'F': ['UUU', 'UUC'], 'L': ['UUA', 'UUG', 'CUU', 'CUC', 'CUA', 'CUG'], 
         'S': ['UCU', 'UCC', 'UCA', 'UCG', 'AGU', 'AGC'], 'Y': ['UAU', 'UAC'], 
         '.': ['UAA', 'UAG', 'UGA'], 'C': ['UGU', 'UGC'], 'W': ['UGG'], 
@@ -28,16 +33,17 @@ new_map = {'F': ['UUU', 'UUC'], 'L': ['UUA', 'UUG', 'CUU', 'CUC', 'CUA', 'CUG'],
         'A': ['GCU', 'GCC', 'GCA', 'GCG'], 'D': ['GAU', 'GAC'], 'E': ['GAA', 'GAG'], 
         'G': ['GGU', 'GGC', 'GGA', 'GGG']}
 
+# Opening session, updating tables and closing session
 s = Session()
 
 s.add_all(dna_bases)
 
+# Codon and Polypeptide tables with one-to-many relationship
 for pp, codons in new_map.items():
     pp = Polypeptide(polypeptide = pp)
     for codon in codons:
         codon = Codon(codon = codon, polypeptide = pp)
         s.add(codon)
-    # print(codon, "->" , pp)
 
 s.commit()
 s.close()

@@ -1,4 +1,4 @@
-
+# This file was used for the first task, to provide a codon <-> polypeptide map 
 map = {"UUU":"F", "UUC":"F", "UUA":"L", "UUG":"L",
     "UCU":"S", "UCC":"S", "UCA":"S", "UCG":"S",
     "UAU":"Y", "UAC":"Y", "UAA":".", "UAG":".",
