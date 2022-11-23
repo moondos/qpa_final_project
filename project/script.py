@@ -32,7 +32,7 @@ def convert_rna_to_dna(sequence: str) -> str:
 def convert_rna_to_protein(sequence: str) -> str:
     '''A function converting RNA sequence to Protein'''
     s_len = len(sequence)
-    temp = 0        # temp varibale for codon triplet iteration 
+    temp = 0        # temp varibale for codon triplet iteration
     triplet = 3     # number of codons for one polypeptide
     protein = ""
     for i in list(range(triplet, s_len+1, triplet)):
@@ -71,7 +71,7 @@ def gc_content_subseq(seq: str, k=200) -> list:
     return res
 
 
-covid_genom = SeqIO.read("project/data/genomic.fna", "fasta")
+covid_genom = SeqIO.read("data/genomic.fna", "fasta")
 
 # print(len(covid_genom.seq))
 
@@ -85,4 +85,4 @@ plt.title("GC-content distribution")
 plt.xlabel("Genome position")
 plt.ylabel("GC-content(%)")
 # plt.show()
-plt.savefig("project/image/gc_dist.png")
+plt.savefig("image/gc_dist.png")
