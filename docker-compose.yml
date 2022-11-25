@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  qpafinalproject:
+    image: qpafinalproject
+    build:
+      context: ./project
+      dockerfile: ./Dockerfile
+    command: python script.py run -h 0.0.0.0
+  db:
+      container_name: postgres1
+      image: postgres:14-alpine
+      expose:
+        - "5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=password
+        - POSTGRES_DB=project
+volumes:
+  postgres_data: 

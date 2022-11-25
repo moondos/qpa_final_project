@@ -7,7 +7,7 @@ This script creates a database with related tables and fill
 them in with required data
 '''
 
-engine = create_engine('postgresql://postgres:password@localhost:5433/project')
+engine = create_engine('postgresql+psycopg2://postgres:password@db:5432/project')
 
 Session = sessionmaker(bind=engine)
 

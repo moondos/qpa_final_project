@@ -43,10 +43,11 @@ def convert_rna_to_protein(sequence: str) -> str:
 
 
 # Test case
-# dna = "ATTTGGCTACTAACAATCTA"
+dna = "ATTTGGCTACTAACAATCTA"
 # rna = "CCCGUCCUUGAUUGGCUUGAAGAGAAGUUU"
-print("Enter DNA sequence:")
-dna = input()  # User input
+#  DOCKER TEST
+# print("Enter DNA sequence:")
+# dna = input()  # User input
 rna = convert_dna_to_rna(dna)
 protein = convert_rna_to_protein(rna)
 print(protein)

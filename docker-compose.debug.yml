@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  qpafinalproject:
+    image: qpafinalproject
+    build:
+      context: ./project
+      dockerfile: ./Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 project\script.py "]
+    ports:
+      - 5678:5678
