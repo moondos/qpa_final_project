@@ -23,6 +23,15 @@ project/legacy folder is used for old files.
 # How to Run the Project
 Everything can be executed from script.py file, it contains function calls for translation, database creation and plotting.
 
+# How to Run the Project in Docker
+
+1. Run docker compose up --build
+2. Docker will build Container pack with posgresql and qpafinalproject containers
+3. Postgresql container will be running but qpafinalproject will stop after script.py execution. You will see results of the default DNA sequence translation in command line and GC-content plot in the volume
+4. To run the script with commandline arguments open a new terminal and enter: 
+    docker-compose run --rm  qpafinalproject {dna} {step}
+    where dna is genomic data (str) as a string and step (int) is denoting a width of a bin
+5. To stop and remove all the container run: docker-compose down --remove-orphans
 
 
 

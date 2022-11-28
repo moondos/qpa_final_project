@@ -7,6 +7,7 @@ This script creates a database with related tables and fill
 them in with required data
 '''
 
+'''localhost is changed to db, 5433 changed to 5432 to run the script in a docker container'''
 engine = create_engine('postgresql+psycopg2://postgres:password@db:5432/project')
 
 Session = sessionmaker(bind=engine)

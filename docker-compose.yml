@@ -6,7 +6,14 @@ services:
     build:
       context: ./project
       dockerfile: ./Dockerfile
-    command: python script.py run -h 0.0.0.0
+    volumes:
+        - script_data:/app/image
+    networks:
+        - mynetwork
+    depends_on:
+        - db
+    links:
+        - db:db
   db:
       container_name: postgres1
       image: postgres:14-alpine
@@ -18,5 +25,13 @@ services:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=password
         - POSTGRES_DB=project
+      networks:
+        - mynetwork
 volumes:
-  postgres_data: 
+  postgres_data:
+  script_data:
+
+
+networks:
+      mynetwork:
+          driver: bridge

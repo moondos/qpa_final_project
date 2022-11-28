@@ -1,11 +1,14 @@
 from data.retrieving import get_rna_bases, get_proteins
 
+import argparse
 import matplotlib.pyplot as plt
 from Bio import SeqIO
 
 '''
-This script consists of two functions for translation DNA into RNA and RNA
-into protein sequence
+This script consists of three functions:
+1. Translation DNA sequence into RNA
+2. RNA into protein sequence translation
+3. Plotting GC-content of genom
 '''
 
 '''Getting DNA <-> RNA Map from PostgreSQL database'''
@@ -42,28 +45,12 @@ def convert_rna_to_protein(sequence: str) -> str:
     return protein
 
 
-# Test case
-dna = "ATTTGGCTACTAACAATCTA"
-# rna = "CCCGUCCUUGAUUGGCUUGAAGAGAAGUUU"
-#  DOCKER TEST
-# print("Enter DNA sequence:")
-# dna = input()  # User input
-rna = convert_dna_to_rna(dna)
-protein = convert_rna_to_protein(rna)
-print(protein)
-
-
-'''
-Task 3 of the project, plotting GC-content of genom
-'''
-
-
 def gc_content(seq: str) -> int:
     '''GC content in DNA/RNA sequence'''
     return round((seq.count("C") + seq.count("G")) / len(seq) * 100)
 
 
-def gc_content_subseq(seq: str, k=200) -> list:
+def gc_content_subseq(seq: str, k=100) -> list:
     '''GC content in DNA/RNA sub-sequence length k'''
     res = []
     for i in range(0, len(seq) - k + 1, k):
@@ -72,13 +59,41 @@ def gc_content_subseq(seq: str, k=200) -> list:
     return res
 
 
-covid_genom = SeqIO.read("data/genomic.fna", "fasta")
+'''Command Line Arguments using Argparse module'''
 
+parser = argparse.ArgumentParser(description="Translates DNA sequence to RNA & Protein and generates GC-content plot")
+# Trying to pass a file as an input
+# parser.add_argument('path', metavar='step', type=str, nargs='?', help='Enter DNA sequence', default="data/dna_sequence.fasta")
+# path = args.path
+parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
+parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=3)
+args = parser.parse_args()
+dna = args.dna
+step = args.step
+
+# Test case
+# dna = "ATTTGGCTACTAACAATCTA"
+# step = 3
+# rna = "CCCGUCCUUGAUUGGCUUGAAGAGAAGUUU"
+#  DOCKER TEST
+# print("Enter DNA sequence:")
+# dna = input()  # User input
+
+# Test input file 
+# covid_genom = SeqIO.read(path, "fasta")
+'''COVID genom - for testing the functions of Part 3'''
+# covid_genom = SeqIO.read("data/dna_sequence.fasta", "fasta")
 # print(len(covid_genom.seq))
+# seq = list(covid_genom)
+# gc_content_lst = gc_content_subseq(seq, 10)
 
-seq = list(covid_genom)
+rna = convert_dna_to_rna(dna)
+protein = convert_rna_to_protein(rna)
+print(protein)
 
-gc_content_lst = gc_content_subseq(seq, 100)
+
+'''User input with or without stepping value'''
+gc_content_lst = gc_content_subseq(dna, step)
 # print(gc_content_lst)
 
 plt.plot(gc_content_lst)
