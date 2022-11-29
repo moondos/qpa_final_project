@@ -62,14 +62,16 @@ def gc_content_subseq(seq: str, k=100) -> list:
 '''Command Line Arguments using Argparse module'''
 
 parser = argparse.ArgumentParser(description="Translates DNA sequence to RNA & Protein and generates GC-content plot")
-# Trying to pass a file as an input
-# parser.add_argument('path', metavar='step', type=str, nargs='?', help='Enter DNA sequence', default="data/dna_sequence.fasta")
-# path = args.path
-parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
-parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=3)
+'''Trying to pass a file as an input'''
+parser.add_argument('path', metavar='path', type=str, nargs='?', help='Enter input file', default="data/input/dna_sequence.fasta")
 args = parser.parse_args()
-dna = args.dna
-step = args.step
+path = args.path
+'''Passing dna sequence and step as an argument'''
+# parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
+# parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=3)
+# args = parser.parse_args()
+# dna = args.dna
+# step = args.step
 
 # Test case
 # dna = "ATTTGGCTACTAACAATCTA"
@@ -79,21 +81,23 @@ step = args.step
 # print("Enter DNA sequence:")
 # dna = input()  # User input
 
-# Test input file 
-# covid_genom = SeqIO.read(path, "fasta")
+# Test input file
+covid_genom = SeqIO.read(path, "fasta")
 '''COVID genom - for testing the functions of Part 3'''
 # covid_genom = SeqIO.read("data/dna_sequence.fasta", "fasta")
 # print(len(covid_genom.seq))
-# seq = list(covid_genom)
-# gc_content_lst = gc_content_subseq(seq, 10)
-
-rna = convert_dna_to_rna(dna)
+seq = list(covid_genom)
+gc_content_lst = gc_content_subseq(seq, 100)
+'''Command line args, dna and step'''
+rna = convert_dna_to_rna(seq)
 protein = convert_rna_to_protein(rna)
 print(protein)
 
+with open("output_data/protein.txt", "w") as f:
+    print(protein, file=f)
 
 '''User input with or without stepping value'''
-gc_content_lst = gc_content_subseq(dna, step)
+# gc_content_lst = gc_content_subseq(dna, step)
 # print(gc_content_lst)
 
 plt.plot(gc_content_lst)
@@ -101,4 +105,4 @@ plt.title("GC-content distribution")
 plt.xlabel("Genome position")
 plt.ylabel("GC-content(%)")
 # plt.show()
-plt.savefig("image/gc_dist.png")
+plt.savefig("output_data/gc_dist.png")

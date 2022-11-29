@@ -7,26 +7,27 @@ services:
       context: ./project
       dockerfile: ./Dockerfile
     volumes:
-        - script_data:/app/image
+        - script_data:/app/output_data
     networks:
         - mynetwork
     depends_on:
         - db
     links:
         - db:db
+    # entrypoint: ["bash"]  # If you want to run container continiously as bash 
   db:
-      container_name: postgres1
-      image: postgres:14-alpine
-      expose:
-        - "5432"
-      volumes:
-        - postgres_data:/var/lib/postgresql/data
-      environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=password
-        - POSTGRES_DB=project
-      networks:
-        - mynetwork
+    container_name: postgres1
+    image: postgres:14-alpine
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=project
+    networks:
+      - mynetwork
 volumes:
   postgres_data:
   script_data:
