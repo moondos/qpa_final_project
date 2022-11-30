@@ -79,7 +79,7 @@ This is the final project of Quantori Python Academy. The purpose of the project
         - Write a bash command:
         `python script.py data/input/genomic.fna 100`
         
-        > In this case container will not stop and you can run the script multiple times without container restart
+    > In this case container will not stop and you can run the script multiple times without container restart
 6. GC-distribution plot (.png) and Protein sequence (.txt) will be in the volume ***script_data*** 
 7. To stop and remove all the containers run: `docker-compose down --remove-orphans`
 
