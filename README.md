@@ -49,7 +49,7 @@ This is the final project of Quantori Python Academy. The purpose of the project
             - data/input/genomic.fna - is a file *path*, positional argument
             - 100 - *step* is width of a bin, optional argument, 100 by default 
     - In case of short dna sequence and step:  
-        - uncomment required script lines 
+        - uncomment required lines in the `script.py`
             ```python
             parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
             dna = args.dna
