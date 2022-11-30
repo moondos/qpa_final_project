@@ -17,9 +17,12 @@ rna_map = get_rna_bases()
 protein_map = get_proteins()
 
 
+'''Functions'''
+
+
 def convert_dna_to_rna(sequence: str) -> str:
     '''A function converting DNA sequence to RNA'''
-    # rna = sequence.replace("T", "U") # code for the first task
+    # rna = sequence.replace("T", "U") # code if no database used
     rna = ""
     for i in sequence:
         rna += rna_map[i]
@@ -27,7 +30,7 @@ def convert_dna_to_rna(sequence: str) -> str:
 
 
 def convert_rna_to_dna(sequence: str) -> str:
-    '''A function converting RNA sequence to DNA. Not used in this stage'''
+    '''A function converting RNA sequence to DNA. Not used in this project'''
     dna = sequence.replace("U", "T")
     return dna
 
@@ -62,43 +65,33 @@ def gc_content_subseq(seq: str, k=100) -> list:
 '''Command Line Arguments using Argparse module'''
 
 parser = argparse.ArgumentParser(description="Translates DNA sequence to RNA & Protein and generates GC-content plot")
-'''Trying to pass a file as an input'''
+'''Passing a file as an input'''
 parser.add_argument('path', metavar='path', type=str, nargs='?', help='Enter input file', default="data/input/dna_sequence.fasta")
+parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=100)
 args = parser.parse_args()
 path = args.path
+step = args.step
 '''Passing dna sequence and step as an argument'''
 # parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
-# parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=3)
 # args = parser.parse_args()
 # dna = args.dna
-# step = args.step
 
-# Test case
-# dna = "ATTTGGCTACTAACAATCTA"
-# step = 3
-# rna = "CCCGUCCUUGAUUGGCUUGAAGAGAAGUUU"
-#  DOCKER TEST
-# print("Enter DNA sequence:")
-# dna = input()  # User input
-
-# Test input file
+'''Command line arg as file in data/input folder with or without stepping value'''
 covid_genom = SeqIO.read(path, "fasta")
-'''COVID genom - for testing the functions of Part 3'''
-# covid_genom = SeqIO.read("data/dna_sequence.fasta", "fasta")
-# print(len(covid_genom.seq))
 seq = list(covid_genom)
-gc_content_lst = gc_content_subseq(seq, 100)
-'''Command line args, dna and step'''
+gc_content_lst = gc_content_subseq(seq, step)
 rna = convert_dna_to_rna(seq)
 protein = convert_rna_to_protein(rna)
 print(protein)
 
+'''Command line args, for short dna sequence and step'''
+# gc_content_lst = gc_content_subseq(dna, step)
+# rna = convert_dna_to_rna(seq)
+# protein = convert_rna_to_protein(rna)
+# print(protein)
+
 with open("output_data/protein.txt", "w") as f:
     print(protein, file=f)
-
-'''User input with or without stepping value'''
-# gc_content_lst = gc_content_subseq(dna, step)
-# print(gc_content_lst)
 
 plt.plot(gc_content_lst)
 plt.title("GC-content distribution")
