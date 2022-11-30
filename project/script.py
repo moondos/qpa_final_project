@@ -90,9 +90,11 @@ print(protein)
 # protein = convert_rna_to_protein(rna)
 # print(protein)
 
+'''Writing protein sequence to a txt file'''
 with open("output_data/protein.txt", "w") as f:
     print(protein, file=f)
 
+'''Creating GC distribution plot and saving to a png file'''
 plt.plot(gc_content_lst)
 plt.title("GC-content distribution")
 plt.xlabel("Genome position")
