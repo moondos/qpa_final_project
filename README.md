@@ -23,6 +23,7 @@ This is the final project of Quantori Python Academy. The purpose of the project
 
 ***project/data***
 * For the functions in script.py to work, there is a need of data describing how DNA and RNA bases correspond, and same for RNA <-> protein conversion. This data is taken from PostgreSQL database, which is build using `models.py`, `crud.py`, `retrieving.py`.
+
     > Table dna_bases contains four bases that form a DNA sequence: A, C, G, and T. Table rna_bases contains bases that form an RNA sequence and should be connected to the first table with one-to-one relation. Link the polypeptide table to codons in a one-to-many relation.
 * *input* folder contains sample FASTA files which can be used to run the project
     - `genomic.fna` - COVID genom 
@@ -34,8 +35,8 @@ This is the final project of Quantori Python Academy. The purpose of the project
 
 ***project/output_data***
 * For outputs such as:
-    - GC-distribution plot
-    - Protein sequence
+    - GC-distribution plot (png file)
+    - Protein sequence (txt file)
 
 ## How to Run the Project in Docker
 1. Copy your FASTA file to data/input folder or use one which is already there
@@ -43,10 +44,10 @@ This is the final project of Quantori Python Academy. The purpose of the project
 3. Docker will build Container pack with posgresql and qpafinalproject containers
 4. Postgresql container will be running but qpafinalproject will stop after script.py execution. You will see results of the default DNA sequence translation and GC-content plot in the volume *script_data*
 5. To run the script:
-    - If you want to pass a file to the script, enter below command to the terminal: 
-    `docker compose run -it --rm qpafinalproject data/input/genomic.fna 100`
-        - data/input/genomic.fna - is a file *path*, positional argument
-        - 100 - *step* is width of a bin, optional argument, 100 by default 
+    - If you want to pass a file to the script, enter below command to the terminal:
+        - Run: `docker compose run -it --rm qpafinalproject data/input/genomic.fna 100`
+            - data/input/genomic.fna - is a file *path*, positional argument
+            - 100 - *step* is width of a bin, optional argument, 100 by default 
     - In case of short dna sequence and step:  
         - uncomment required script lines 
             ```python
@@ -67,7 +68,8 @@ This is the final project of Quantori Python Academy. The purpose of the project
             protein = convert_rna_to_protein(rna)
             print(protein)
             ```
-    `docker-compose run --rm  qpafinalproject {dna} {step}`
+        - Run: `docker-compose run --rm  qpafinalproject {dna} {step}`
+
     > dna is genomic data (ATTTGGCTACTAACAATCTA) as a string and step (3) is denoting a width of a bin
     - If you want to run container continiously through bash:
         - uncomment required line in docker-compose.yml:
@@ -76,11 +78,12 @@ This is the final project of Quantori Python Academy. The purpose of the project
         `docker compose run -it --rm qpafinalproject`
         - Write a bash command:
         `python script.py data/input/genomic.fna 100`
+        
         > In this case container will not stop and you can run the script multiple times without container restart
 6. GC-distribution plot (.png) and Protein sequence (.txt) will be in the volume ***script_data*** 
 7. To stop and remove all the containers run: `docker-compose down --remove-orphans`
 
-## How to Run the Project
+## How to Run the Project without Docker
 Everything can be executed from `script.py` file, it contains function calls for translation, database creation and plotting.
 > Make sure you amended `crud.py` file to be able to connect to localhost.
 
