@@ -71,10 +71,6 @@ parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter ste
 args = parser.parse_args()
 path = args.path
 step = args.step
-'''Passing dna sequence and step as an argument'''
-# parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
-# args = parser.parse_args()
-# dna = args.dna
 
 '''Command line arg as file in data/input folder with or without stepping value'''
 covid_genom = SeqIO.read(path, "fasta")
@@ -83,12 +79,6 @@ gc_content_lst = gc_content_subseq(seq, step)
 rna = convert_dna_to_rna(seq)
 protein = convert_rna_to_protein(rna)
 print(protein)
-
-'''Command line args, for short dna sequence and step'''
-# gc_content_lst = gc_content_subseq(dna, step)
-# rna = convert_dna_to_rna(seq)
-# protein = convert_rna_to_protein(rna)
-# print(protein)
 
 '''Writing protein sequence to a txt file'''
 with open("output_data/protein.txt", "w") as f:

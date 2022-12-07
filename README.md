@@ -38,50 +38,20 @@ This is the final project of Quantori Python Academy. The purpose of the project
     - GC-distribution plot (png file)
     - Protein sequence (txt file)
 
+***docker-compose.yml***
+* This file contains the configuration to bring up the containers as expected in production.
+
 ## How to Run the Project in Docker
 1. Copy your FASTA file to data/input folder or use one which is already there
 2. Run `docker compose up -d --build`
 3. Docker will build Container pack with posgresql and qpafinalproject containers
 4. Postgresql container will be running but qpafinalproject will stop after script.py execution. You will see results of the default DNA sequence translation and GC-content plot in the volume *script_data*
-5. To run the script:
-    - If you want to pass a file to the script, enter below command to the terminal:
+5. To run the script you need to enter below command to the terminal:
         - Run: `docker compose run -it --rm qpafinalproject data/input/genomic.fna 100`
-            - data/input/genomic.fna - is a file *path*, positional argument
-            - 100 - *step* is width of a bin, optional argument, 100 by default 
-    - In case of short dna sequence and step:  
-        - uncomment required lines in the `script.py`
-            ```python
-            parser.add_argument('dna', metavar='dna', type=list, nargs='?', help='Enter DNA sequence', default="ATTTGGCTACTAACAATCTA")
-            dna = args.dna
-            gc_content_lst = gc_content_subseq(dna, step)
-            rna = convert_dna_to_rna(seq)
-            protein = convert_rna_to_protein(rna)
-            print(protein)
-            ``` 
-        - comment 
-            ```python
-            parser.add_argument('path', metavar='path', type=str, nargs='?', help='Enter input file', default="data/input/dna_sequence.fasta")
-            covid_genom = SeqIO.read(path, "fasta")
-            seq = list(covid_genom)
-            gc_content_lst = gc_content_subseq(seq, step)
-            rna = convert_dna_to_rna(seq)
-            protein = convert_rna_to_protein(rna)
-            print(protein)
-            ```
-        - Run: `docker-compose run --rm  qpafinalproject {dna} {step}`
-
-    > dna is genomic data (ATTTGGCTACTAACAATCTA) as a string and step (3) is denoting a width of a bin
-    - If you want to run container continiously through bash:
-        - uncomment required line in docker-compose.yml:
-        ```entrypoint: ["bash"]```
-        - Run:
-        `docker compose run -it --rm qpafinalproject`
-        - Write a bash command:
-        `python script.py data/input/genomic.fna 100`
-        
-    > In this case container will not stop and you can run the script multiple times without container restart
+            - data/input/genomic.fna - is a file *path* (FASTA genom file), positional argument
+            - 100 - *step* is width of a bin, optional argument, 100 by default       
 6. GC-distribution plot (.png) and Protein sequence (.txt) will be in the volume ***script_data*** 
-7. To stop and remove all the containers run: `docker-compose down --remove-orphans`
+7. To stop and remove all the containers run: `docker compose down --remove-orphans`
 
 ## How to Run the Project without Docker
 Everything can be executed from `script.py` file, it contains function calls for translation, database creation and plotting.

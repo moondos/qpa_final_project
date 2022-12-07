@@ -14,7 +14,7 @@ services:
         - db
     links:
         - db:db
-    # entrypoint: ["bash"]  # If you want to run container continiously as bash 
+
   db:
     container_name: postgres1
     image: postgres:14-alpine
