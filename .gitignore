@@ -134,3 +134,6 @@ dmypy.json
 # Gitkeep #
 project/data/output_data/
 .gitkeep
+
+# Docker #
+.dockerignore

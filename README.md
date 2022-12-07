@@ -47,9 +47,9 @@ This is the final project of Quantori Python Academy. The purpose of the project
 3. Docker will build Container pack with posgresql and qpafinalproject containers
 4. Postgresql container will be running but qpafinalproject will stop after script.py execution. You will see results of the default DNA sequence translation and GC-content plot in the volume *script_data*
 5. To run the script you need to enter below command to the terminal:
-        - Run: `docker compose run -it --rm qpafinalproject data/input/genomic.fna 100`
-            - data/input/genomic.fna - is a file *path* (FASTA genom file), positional argument
-            - 100 - *step* is width of a bin, optional argument, 100 by default       
+    - Run: `docker compose run -it --rm qpafinalproject data/input/genomic.fna 100`
+        - data/input/genomic.fna - is a file *path* (FASTA genom file), positional argument
+        - 100 - *step* is width of a bin, optional argument, 100 by default       
 6. GC-distribution plot (.png) and Protein sequence (.txt) will be in the volume ***script_data*** 
 7. To stop and remove all the containers run: `docker compose down --remove-orphans`
 
