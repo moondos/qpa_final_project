@@ -87,20 +87,26 @@ def graph_plot(gc_content_lst):
     return
 
 
-'''Command Line Arguments using Argparse module'''
+def main():
+    '''
+    Command Line Arguments using Argparse module
+    Passing a file as an input
+    '''
+    parser = argparse.ArgumentParser(description="Translates DNA sequence to RNA & Protein and generates GC-content plot")
+    parser.add_argument('path', metavar='path', type=str, nargs='?', help='Enter input file', default="data/input/dna_sequence.fasta")
+    parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=100)
+    args = parser.parse_args()
+    path = args.path
+    step = args.step
 
-parser = argparse.ArgumentParser(description="Translates DNA sequence to RNA & Protein and generates GC-content plot")
-'''Passing a file as an input'''
-parser.add_argument('path', metavar='path', type=str, nargs='?', help='Enter input file', default="data/input/dna_sequence.fasta")
-parser.add_argument('step', metavar='step', type=int, nargs='?', help='Enter step for GC-content', default=100)
-args = parser.parse_args()
-path = args.path
-step = args.step
+    seq = read_genom(path)
+    gc_content_lst = gc_content_subseq(seq, step)
+    rna = convert_dna_to_rna(seq)
+    protein = convert_rna_to_protein(rna)
+    print(protein)
+    log_protein(protein)
+    graph_plot(gc_content_lst)
 
-seq = read_genom(path)
-gc_content_lst = gc_content_subseq(seq, step)
-rna = convert_dna_to_rna(seq)
-protein = convert_rna_to_protein(rna)
-print(protein)
-log_protein(protein)
-graph_plot(gc_content_lst)
+
+if __name__ == "__main__":
+    main()
