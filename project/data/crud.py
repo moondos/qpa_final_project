@@ -5,9 +5,8 @@ from sqlalchemy import create_engine
 '''
 This script creates a database with related tables and fill
 them in with required data
-'''
 
-'''To run script without docker, replace:
+To run script without docker, replace:
 db - localhost
 5432 - 5433
 '''

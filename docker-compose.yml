@@ -7,7 +7,7 @@ services:
       context: ./project
       dockerfile: ./Dockerfile
     volumes:
-        - script_data:/app/output_data
+        - script_data:/app/data/output_data
     networks:
         - mynetwork
     depends_on:

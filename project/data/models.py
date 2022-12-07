@@ -15,7 +15,7 @@ class DNA(Base):
     __tablename__ = 'dna_bases'
     __tablearg__ = {"extend_existing": True}
     id = Column(Integer, primary_key=True)
-    dna_base = Column(String)
+    dna_base = Column(String(1))
     rna_base = relationship("RNA", uselist=False, back_populates="dna_base")
     rna_base_id = Column(Integer, ForeignKey("rna_bases.id"))
 
@@ -28,7 +28,7 @@ class RNA(Base):
     __tablename__ = 'rna_bases'
     __tablearg__ = {"extend_existing": True}
     id = Column(Integer, primary_key=True)
-    rna_base = Column(String)
+    rna_base = Column(String(1))
     dna_base = relationship("DNA", uselist=False, back_populates="rna_base")
 
     def __repr__(self) -> str:
@@ -40,7 +40,7 @@ class Codon(Base):
     __tablename__ = 'codons'
     __tablearg__ = {"extend_existing": True}
     id = Column(Integer, primary_key=True)
-    codon = Column(String)
+    codon = Column(String(3))
     polypeptide = relationship("Polypeptide", back_populates="codon")
     polypeptide_id = Column(Integer, ForeignKey("polypeptides.id"))
 
@@ -53,7 +53,7 @@ class Polypeptide(Base):
     __tablename__ = 'polypeptides'
     __tablearg__ = {"extend_existing": True}
     id = Column(Integer, primary_key=True)
-    polypeptide = Column(String)
+    polypeptide = Column(String(1))
     codon = relationship("Codon", back_populates="polypeptide")
 
     def __repr__(self) -> str:

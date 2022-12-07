@@ -130,3 +130,7 @@ dmypy.json
 
 # VisualStudioCode #
 .vscode/
+
+# Gitkeep #
+project/data/output_data/
+.gitkeep

@@ -62,6 +62,31 @@ def gc_content_subseq(seq: str, k=100) -> list:
     return res
 
 
+def read_genom(path):
+    '''Command line arg as file in data/input folder with or without stepping value'''
+    covid_genom = SeqIO.read(path, "fasta")
+    seq = list(covid_genom)
+    return seq
+
+
+def log_protein(protein):
+    '''Writing protein sequence to a txt file'''
+    with open("data/output_data/protein.txt", "w") as f:
+        print(protein, file=f)
+    return
+
+
+def graph_plot(gc_content_lst):
+    '''Creating GC distribution plot and saving to a png file'''
+    plt.plot(gc_content_lst)
+    plt.title("GC-content distribution")
+    plt.xlabel("Genome position")
+    plt.ylabel("GC-content(%)")
+    # plt.show()
+    plt.savefig("data/output_data/gc_dist.png")
+    return
+
+
 '''Command Line Arguments using Argparse module'''
 
 parser = argparse.ArgumentParser(description="Translates DNA sequence to RNA & Protein and generates GC-content plot")
@@ -72,22 +97,10 @@ args = parser.parse_args()
 path = args.path
 step = args.step
 
-'''Command line arg as file in data/input folder with or without stepping value'''
-covid_genom = SeqIO.read(path, "fasta")
-seq = list(covid_genom)
+seq = read_genom(path)
 gc_content_lst = gc_content_subseq(seq, step)
 rna = convert_dna_to_rna(seq)
 protein = convert_rna_to_protein(rna)
 print(protein)
-
-'''Writing protein sequence to a txt file'''
-with open("output_data/protein.txt", "w") as f:
-    print(protein, file=f)
-
-'''Creating GC distribution plot and saving to a png file'''
-plt.plot(gc_content_lst)
-plt.title("GC-content distribution")
-plt.xlabel("Genome position")
-plt.ylabel("GC-content(%)")
-# plt.show()
-plt.savefig("output_data/gc_dist.png")
+log_protein(protein)
+graph_plot(gc_content_lst)
